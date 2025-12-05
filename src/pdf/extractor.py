@@ -12,3 +12,6 @@ with pdfplumber.open(pdf_path) as pdf:
         texto += page.extract_text()
         
 print(texto)
+print("Número total de páginas extraídas:", len(pdf.pages))
+print("Número total de palavras extraídas:", len(texto.split()))
+print("Tamanho em bytes do texto extraído:", len(texto.encode('utf-8')))

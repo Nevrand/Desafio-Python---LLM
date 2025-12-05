@@ -1,0 +1,1 @@
+# Usando o modelo  para o texto extraído do PDF

@@ -1,0 +1,1 @@
+# Usando o modelo tal para sumário do texto extraído do PDF
