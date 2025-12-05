@@ -1,4 +1,4 @@
-# Importando o pdfplumber como nossa ferramenta principal para extração de texto
+# Importando o pdfplumber como ferramenta principal para extração de texto
 import pdfplumber
 
 # Caminho do arquivo PDF a ser extraído
