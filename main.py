@@ -1,13 +1,13 @@
 
 from cli.arguments import get_arguments
+from llm.summarize import rodarSummarize
 
 def main():
     # Pegar argumentos
     args = get_arguments()
     
     # Verificando se está funcionando
-    print("PDF escolhido:", args.pdf_path)
-    print("Saída:", args.out)
+    rodarSummarize(args)
 
     if __name__ == "__main__":
         main()
