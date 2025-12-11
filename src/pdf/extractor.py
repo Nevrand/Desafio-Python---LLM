@@ -1,7 +1,11 @@
 import pdfplumber
 import os
+import argparse
 
-def extrairTexto(caminhoPdf):
+from src.utils.files import tamanhoArquivo
+from src.utils.text import (limparTexto, textoMinusculo, separarPalavras, removerStopwords, vocabularioUnico, contarPalavras, contarPalavrasComuns)
+
+def extrairTexto(caminhoPdf: str):
     # Verificando se o PDF existe
     if not os.path.isfile(caminhoPdf):
         print("PDF não encontrado.")
@@ -31,3 +35,40 @@ def extrairTexto(caminhoPdf):
         "texto": textoExtraido,
         "numPaginas": numPaginas,
     }
+
+def analisarPdf(caminhoPdf: str):
+    dados = extrairTexto(caminhoPdf)
+
+    if not dados:
+        print("Nenhum dado extraído do PDF.")
+        return
+    
+    texto = dados["texto"]
+    numPaginas = dados["numPaginas"]
+
+    textoLimpo = limparTexto(texto)
+    textoMinusculo = textoMinusculo(textoLimpo)
+    palavras = separarPalavras(textoMinusculo)
+    palavrasSemStopwords = removerStopwords(palavras)
+
+    totalPalavras = contarPalavras(palavrasSemStopwords)
+    vocabulario = vocabularioUnico(palavrasSemStopwords)
+    palavrasComuns = contarPalavrasComuns(palavrasSemStopwords, n = 10)
+    tamanhoBytes = tamanhoArquivo(caminhoPdf)
+
+    print(f"Número de páginas: {numPaginas}")
+    print(f"Tamanho do arquivo: {tamanhoBytes} bytes")
+    print(f"Número total de palavras (sem stopwords): {totalPalavras}")
+    print(f"Número de palavras únicas: {len(vocabulario)}")
+    print(f"Palavras mais comuns: {palavrasComuns}")
+
+def rodarExtrairTexto():
+    parser = argparse.ArgumentParser(prog = "extractor", description = "Extrair texto de um arquivo PDF")
+    
+    parser.add_argument("--pdf", type = str, help = "Caminho do arquivo PDF")
+
+    args = parser.parse_args()
+    analisarPdf(args.pdf)
+
+if __name__ == "__main__":
+    rodarExtrairTexto()

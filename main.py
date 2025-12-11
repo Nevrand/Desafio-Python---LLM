@@ -1,5 +1,5 @@
-from cli.arguments import get_arguments
-from llm.summarize import rodarSummarize
+from src.cli.arguments import get_arguments
+from src.llm.summarize import rodarSummarize
 
 def main():
     args = get_arguments()
