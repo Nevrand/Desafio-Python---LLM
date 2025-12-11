@@ -4,8 +4,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 # Modelo que irá ser utilizado para o projeto
 modelo = "microsoft/phi-3.5-mini-instruct"
 
-def carregarModelo(modelo: str):
-    # Cuda só funciona com GPU da NVIDIA, então caso não houver o GPU, utilizar a CPU
+def carregarModelo(modelo: str = modelo):
+    # Utilizar a CPU pois pode não haver GPU em alguns casos
     device = torch.device("cpu")
     
     # Carregando o modelo phi-mini-instruct utilizando transformers
@@ -13,7 +13,6 @@ def carregarModelo(modelo: str):
     model = AutoModelForCausalLM.from_pretrained(modelo, torch_dtype = torch.float32)
     
     model.to(device)
-    model.device = device
     return tokenizer, model
 
 
@@ -22,13 +21,12 @@ def gerarResumo(tokenizer, model, texto: str):
     prompt = f"Faça um resumo claro e conciso do seguinte texto:\n\n{texto}\n\n"
     
     # Entrada do modelo
-    entrada = tokenizer(prompt, return_tensors= "pt", truncation = True)
+    entrada = tokenizer(prompt, return_tensors = "pt", truncation = True)
     entrada = {k: v.to(model.device) for k, v in entrada.items()}
     
     # Saída do modelo
-    saida = model.generate(**entrada, max_new_tokens=512, temperature=0)
+    saida = model.generate(**entrada, max_new_tokens = 512, temperature = 0)
     
     # Decodificando a saída do modelo
-    resultado = tokenizer.decode(saida[0], skip_special_tokens=True)
+    return tokenizer.decode(saida[0], skip_special_tokens = True)
     
-    return resultado

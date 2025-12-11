@@ -1,7 +1,7 @@
 import os
 import pdfplumber
 from typing import List
-from cli.arguments import get_arguments
+from src.cli.arguments import get_arguments
 
 def extrairImagem(caminhoPdf: str, pastaSaida: str) -> List[str]:
     # Verificando se o PDF existe
