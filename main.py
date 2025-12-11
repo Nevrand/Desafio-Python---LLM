@@ -9,5 +9,5 @@ def main():
     # Verificando se está funcionando
     rodarSummarize(args)
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,7 @@
 import os
 import pdfplumber
 from typing import List
+from cli.arguments import get_arguments
 
 def extrairImagem(caminhoPdf: str, pastaSaida: str) -> List[str]:
     # Verificando se o PDF existe
@@ -42,3 +43,19 @@ def extrairImagem(caminhoPdf: str, pastaSaida: str) -> List[str]:
         return []
 
     return caminhoImagem
+
+def rodarExtrairImagens(args) -> None:
+    pasta = os.path.join("imagens", os.path.splitext(os.path.basename(args.pdf))[0])
+    print("Extraindo imagens do PDF para:", pasta)
+    caminhoImagem = extrairImagem(args.pdf, pasta)
+
+    if caminhoImagem:
+        print("Imagens extraídas:")
+        for c in caminhoImagem:
+            print(" -", c)
+    else:
+        print("Nenhuma imagem encontrada no PDF.")
+
+if __name__ == "__main__":
+    args = get_arguments()
+    rodarExtrairImagens(args)

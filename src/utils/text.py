@@ -23,7 +23,7 @@ def textoMinusculo(texto: str) -> str:
 
 
 def separarPalavras(texto: str) -> List[str]:
-    # Separa o texto em uma lista de palavras, removendo pontuações
+    # Separa o texto em uma lista de palavras, removendo pontos
     if not texto:
         return []
     
