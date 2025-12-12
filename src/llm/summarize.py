@@ -1,4 +1,3 @@
-import os
 from src.cli.arguments import get_arguments
 from src.llm.model import carregarModelo, gerarResumo
 from src.pdf.extractor import extrairTexto
@@ -12,11 +11,13 @@ def salvarResumo(caminhoSaida: str, resumo: str) -> None:
     except Exception as e:
         print("Erro ao salvar o resumo:", e)
 
+# Rodando o resumo
 def rodarSummarize(args):
 
     print("Extraindo o texto do PDF")
     dados = extrairTexto(args.pdf)
-
+    
+    # Verificando se o texto foi extraído
     if not dados or not dados.get("texto"):
         print("Nenhum texto extraído do PDF")
         return
@@ -32,8 +33,10 @@ def rodarSummarize(args):
     # Salvando o resumo
     salvarResumo(args.saida, resumo) 
 
+# Executando o resumo
 if __name__ == "__main__":
-    args = get_arguments()
+    parser = get_arguments()
+    args = parser.parse_args()
     rodarSummarize(args)
 
 

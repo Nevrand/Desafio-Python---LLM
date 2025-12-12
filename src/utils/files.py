@@ -42,6 +42,7 @@ def listarArquivos(pasta: str) -> List[str]:
         print("Pasta não encontrada:", pasta)
         return pdfs
     
+    # Listando os arquivos na pasta
     try:
         for arquivo in os.listdir(pasta):
             if arquivo.endswith(".pdf"):

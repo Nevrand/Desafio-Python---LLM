@@ -15,7 +15,7 @@ def extrairImagem(caminhoPdf: str, pastaSaida: str) -> List[str]:
     caminhoImagem = []
     contador = 1
 
-    # Abrindo o PDF
+    # Abrindo o PDF e extraindo as imagens
     try:
         with pdfplumber.open(caminhoPdf) as pdf:
             for numPagina, pagina in enumerate(pdf.pages):
@@ -44,11 +44,14 @@ def extrairImagem(caminhoPdf: str, pastaSaida: str) -> List[str]:
 
     return caminhoImagem
 
+# Função para rodar a extração de imagens
 def rodarExtrairImagens(args) -> None:
+    # Colocando as imagens na pasta imagens/
     pasta = os.path.join("imagens", os.path.splitext(os.path.basename(args.pdf))[0])
     print("Extraindo imagens do PDF para:", pasta)
     caminhoImagem = extrairImagem(args.pdf, pasta)
-
+    
+    # Verificando se foram extraídas as imagens 
     if caminhoImagem:
         print("Imagens extraídas:")
         for c in caminhoImagem:
@@ -56,6 +59,8 @@ def rodarExtrairImagens(args) -> None:
     else:
         print("Nenhuma imagem encontrada no PDF.")
 
+# Executando a extração de imagens
 if __name__ == "__main__":
-    args = get_arguments()
+    parser = get_arguments()
+    args = parser.parse_args()
     rodarExtrairImagens(args)

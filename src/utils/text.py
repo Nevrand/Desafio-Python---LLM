@@ -40,7 +40,7 @@ def removerStopwords(palavras: List[str]) -> List[str]:
     return palavrasFiltradas
 
 def vocabularioUnico(palavras: List[str]) -> set:
-    # Retorna um conjunto de palavras únicas
+    # Retorna palavras únicas
     if not palavras:
         return set()
     

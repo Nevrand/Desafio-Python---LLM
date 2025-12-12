@@ -1,9 +1,9 @@
 import pdfplumber
 import os
-import argparse
 
 from src.utils.files import tamanhoArquivo
 from src.utils.text import (limparTexto, textoMinusculo, separarPalavras, removerStopwords, vocabularioUnico, contarPalavras, contarPalavrasComuns)
+from src.cli.arguments import get_arguments
 
 def extrairTexto(caminhoPdf: str):
     # Verificando se o PDF existe
@@ -36,6 +36,7 @@ def extrairTexto(caminhoPdf: str):
         "numPaginas": numPaginas,
     }
 
+# Função para analisar o PDF e também chamar as funções de text.py para usar no processo de extração
 def analisarPdf(caminhoPdf: str):
     dados = extrairTexto(caminhoPdf)
 
@@ -46,11 +47,11 @@ def analisarPdf(caminhoPdf: str):
     texto = dados["texto"]
     numPaginas = dados["numPaginas"]
 
+    # Chamando as funções de text.py para utilizar no texto extraído
     textoLimpo = limparTexto(texto)
-    textoMinusculo = textoMinusculo(textoLimpo)
-    palavras = separarPalavras(textoMinusculo)
+    textoMin = textoMinusculo(textoLimpo)
+    palavras = separarPalavras(textoMin)
     palavrasSemStopwords = removerStopwords(palavras)
-
     totalPalavras = contarPalavras(palavrasSemStopwords)
     vocabulario = vocabularioUnico(palavrasSemStopwords)
     palavrasComuns = contarPalavrasComuns(palavrasSemStopwords, n = 10)
@@ -62,13 +63,24 @@ def analisarPdf(caminhoPdf: str):
     print(f"Número de palavras únicas: {len(vocabulario)}")
     print(f"Palavras mais comuns: {palavrasComuns}")
 
-def rodarExtrairTexto():
-    parser = argparse.ArgumentParser(prog = "extractor", description = "Extrair texto de um arquivo PDF")
-    
-    parser.add_argument("--pdf", type = str, help = "Caminho do arquivo PDF")
-
+# Se utilizar o comando de arguments.py como detalhes ou texto ou nenhum dos dois e aí irá rodar um dos ifs para fazer certos papéis
+def main():
+    parser = get_arguments()
     args = parser.parse_args()
-    analisarPdf(args.pdf)
+    info = extrairTexto(args.pdf)
+    
+    # Se for detalhes, vai imprirr o número de páginas e tamanho do texto
+    if args.detalhes:
+        print(f"Número de páginas: {info['numPaginas']}")
+        print(f"Tamanho do texto: {len(info['texto'])} caracteres")
+
+    # Se for texto, vai imprimir o texto extraído do PDF
+    if args.texto:
+        print(f"Texto extraído do PDF: {info['texto']}")
+    
+    # Se não for nenhum dos dois, vai analisar o PDF
+    if not args.detalhes and not args.texto:
+        analisarPdf(args.pdf)
 
 if __name__ == "__main__":
-    rodarExtrairTexto()
+    main()

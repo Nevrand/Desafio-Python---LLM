@@ -2,13 +2,13 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # Modelo que irá ser utilizado para o projeto
-modelo = "microsoft/phi-3.5-mini-instruct"
+modelo = "microsoft/Phi-3-mini-4k-instruct"
 
 def carregarModelo(modelo: str = modelo):
     # Utilizar a CPU pois pode não haver GPU em alguns casos
     device = torch.device("cpu")
     
-    # Carregando o modelo phi-mini-instruct utilizando transformers
+    # Carregando o modelo LLM utilizando transformers
     tokenizer = AutoTokenizer.from_pretrained(modelo)
     model = AutoModelForCausalLM.from_pretrained(modelo, torch_dtype = torch.float32)
     
@@ -17,7 +17,7 @@ def carregarModelo(modelo: str = modelo):
 
 
 def gerarResumo(tokenizer, model, texto: str):
-    # Prompt para ser usado no phi-mini-instruct
+    # Prompt para ser usado pelo modelo
     prompt = f"Faça um resumo claro e conciso do seguinte texto:\n\n{texto}\n\n"
     
     # Entrada do modelo
