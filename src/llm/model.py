@@ -2,7 +2,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # Modelo que irá ser utilizado para o projeto
-modelo = "microsoft/Phi-3-mini-4k-instruct"
+modelo = "Qwen/Qwen2.5-0.5B-Instruct"
 
 def carregarModelo(modelo: str = modelo):
     # Utilizar a CPU pois pode não haver GPU em alguns casos
@@ -25,7 +25,7 @@ def gerarResumo(tokenizer, model, texto: str):
     entrada = {k: v.to(model.device) for k, v in entrada.items()}
     
     # Saída do modelo
-    saida = model.generate(**entrada, max_new_tokens = 512, temperature = 0)
+    saida = model.generate(**entrada, max_new_tokens = 512, do_sample = False)
     
     # Decodificando a saída do modelo
     return tokenizer.decode(saida[0], skip_special_tokens = True)

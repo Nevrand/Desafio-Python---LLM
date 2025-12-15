@@ -37,7 +37,7 @@ Podem ser instalados com os seguintes comandos respectivamente:
 - pip install transformers ou py -m pip install transformers
 
 # Modelo
-Como o modelo poderia ser de escolha minha, fui com a recomendação do GPT de usar o microsoft/Phi-3-mini-4k-instruct no projeto.
+Como o modelo poderia ser de escolha minha, fui com a recomendação do GPT de usar o Qwen/Qwen2.5-0.5B-Instruct no projeto, o que não dá para resumir textos grandes pois o meu computador não consegue fazer resumo com modelos maiores.
 
 # Executando
 Como é necessário ter comando para se usar no terminal, aqui temos alguns para testes:
@@ -47,5 +47,3 @@ Como é necessário ter comando para se usar no terminal, aqui temos alguns para
 
 # No geral ou Conclusão/Limitações
 O projeto seria minha primeira vez mexendo em LLM e também aprendendo mais sobre quais comandos a usar para mexer com IA em Python. Então, pedi auxílio ao GPT para confirmar quais comandos usar, o que fazer em certas situações, checar erros e também qual modelo de LLM utilizar pois desconheço sobre modelos LLM. Serviu como forma de treinar no desenvolvimento de usar uma LLM local e também mexer mais em Python.
-
-

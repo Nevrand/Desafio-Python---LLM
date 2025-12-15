@@ -38,7 +38,7 @@ def get_arguments():
     parser.add_argument(
     "--modelo",
     type = str,
-    default = "microsoft/Phi-3-mini-4k-instruct",
+    default = "Qwen/Qwen2.5-0.5B-Instruct",
     help = "Modelo LLM que foi usado"
     )
     
